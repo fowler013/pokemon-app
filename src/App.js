@@ -9,23 +9,48 @@ class App extends Component {
     super(props)
 
     this.state = {
-      name: ''
+      name1: '', 
+      name2: '',
+      id: 2,
+      items: []
     }
 
-    this.items = [
-      {value: 'ash'},
-      {value:'brock'},
-      {value:'misty'},
+    // this.id = 2
+
+    this.state.items = [
+      {name1: 'ash',name2: "catchem", id: 0},
+      {name1:'brock',name2: "somebody", id: 1},
+      {name1:'misty',name2: "cassie", id: 2}
     ];
   }
 
-  handleInputChange = (value1) => {
-    this.setState({ name: value1 });
+  handleFirstName = (value1) => {
+    this.setState({ name1: value1.target.value });
   }
-  handleInputChange = (value2) => {
-    this.setState({ name: value2 });
+  handleLastName = (value2) => {
+    this.setState({ name2: value2.target.value });
   }
+handleClick = () => {
+  // console.log('click here')
+  let name1 = this.state.name1
+  let name2 = this.state.name2
+ 
 
+  let box = {
+    name1,
+    name2
+  }
+  let trainer = [...this.state.items, box ];
+
+  this.setState({
+items: trainer,
+name1: '',
+name2: ''
+  })
+  console.log(trainer)
+  // document.getElementById('getfirstname').value = ''
+  // document.getElementById('getlastname').value = ''
+}
   render() {
     return (
       <div className="App bg-secondary">
@@ -38,14 +63,14 @@ class App extends Component {
             <div className="input-group">
 
               <div className="input-group-prepend">
-                <button className="input-group-text bg-dark text-light" id="">First and last name</button>
+                <button onClick={(event) => {this.handleClick()}} className="input-group-text bg-dark text-light" id="">Add New Trainer</button>
               </div>
-              <input placeholder="New" type="text" className="form-control"
-                value={this.state.name}
-                onChange={(event) => this.handleInputChange(event.target.value1)} />
-              <input placeholder="Trainer" type="text" className="form-control"
-                value={this.state.name}
-                onChange={(event) => this.handleInputChange(event.target.value2)} />
+              <input id='getfirstname' placeholder="First Name" type="text" className="form-control"
+                value={this.state.name1}
+                onChange={ this.handleFirstName} />
+              <input id='getlastname' placeholder="Last Name" type="text" className="form-control"
+                value={this.state.name2}
+                onChange={this.handleLastName} />
 
             </div>
           </div>
@@ -57,7 +82,7 @@ class App extends Component {
         />
 
         <InfoBar 
-        items = {this.items}
+        items = {this.state.items}
         />
       </div>
     );
